@@ -2,18 +2,53 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Delivery{% endblock %}</title>
-  {% load django_bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-  {% block extra_head %}{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Delivery{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% block extra_head %}
+    {% endblock %}
 </head>
+<style>
+
+</style>
 <body>
-<div class="container mt-3">
-    {% block content %}
-    {% endblock content %}
+<div class="container mt-3 mx-auto" style="max-width:800px">
+    <header class="row shadow-sm p-3 mb-5 bg-white rounded">
+        <h1 class="col-7 d-flex justify-content-start px-0"><a href="{% url 'App:home' %}">Foodiary</a></h1>
+        {#ログインしているか確認して表示#}
+        <div class="col-5">
+            {% if request.user.is_anonymous %}
+                <p>
+                    <button onclick="location.href={% url 'App:login' %}">ログイン</button>
+                </p>
+            {% else %}
+                <div class="row d-flex justify-content-end">
+                    <div class="col px-0 d-flex justify-content-end row">
+                        <p class="m-0 text-end"><a href="{% url 'App:user_page' %}">{{ user.username }}さん</a></p>
+                        {% if user.is_superuser %}
+                            <p class="m-0 text-end"><a href="{% url 'admin:index' %}">管理画面</a></p>
+                        {% endif %}
+                    </div>
+                    <div class="col-4 px-0 d-flex justify-content-end">
+                        <button onclick="location.href={% url 'App:logout' %}">ログアウト</button>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+    <div class="mt-5">
+        {% if request.user.is_anonymous %}
+            <p>ログインしてください。</p>
+        {% else %}
+            {% block content %}
+            {% endblock content %}
+        {% endif %}
+    </div>
 </div>
 </body>
 </html>

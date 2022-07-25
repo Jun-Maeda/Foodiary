@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% load django_bootstrap5 %}
+
+    <div class="mt-5">
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="row form-group">
+                        <label class="col-4 mt-2">{{ field.label }}{{ field.errors }}</label>
+                        <div class="col-8 mt-2">
+                            {% if field.label == "ユーザー名" %}
+                                <input id="id_user" type="text" name="user" class="form-control"
+                                       value="{{ user.pk }}" readonly hidden required="">
+                                <input id="requestUserName" class="form-control"
+                                       value="{{ user.username }}" readonly>
+                            {% else %}
+                                {{ field }}
+                            {% endif %}
+
+                            {% if field.help_text %}
+                                <small class="text-danger">{{ field.help_text|safe }}</small>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                {% endfor %}
+                <button class="btn btn-sm btn-outline-primary mt-3" type="submit">送信</button>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}

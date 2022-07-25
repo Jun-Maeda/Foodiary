@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% load django_bootstrap5 %}
+
+    <div class="mt-5">
+        <h2 class="mb-0">{{ title }}</h2>
+        <ul class="mt-4">
+            {% for d in data_list %}
+                {% if d.user == request.user %}
+                <li><a href="{% url url_name pk=d.pk %}">
+                    {#                日記の時#}
+                    {% if d.evaluation %}
+                        {{ d.date }}
+                        <span style="margin-left:20px">{{ d.get_evaluation_display }}</span>
+                    {% else %}
+                        {{ d.name }}
+                    {% endif %}
+                </a>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
+    </div>
+{% endblock %}

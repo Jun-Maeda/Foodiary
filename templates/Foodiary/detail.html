@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div>
+    {% if ob_name.user == request.user %}
+        <h2>{{ ob_name }}</h2>
+        {% if ob_name.menu %}
+            <p><img src="{{ ob_name.menu.url }}" style="max-width:50%"></p>
+        {% endif %}
+        {% if ob_name.memo %}
+            <p>{{ ob_name.memo }}</p>
+        {% endif %}
+        {% if ob_name.last_history %}
+            <p>{{ ob_name.last_history }}</p>
+        {% endif %}
+        <p><b><a href="{% url 'App:shop_diary' pk=ob_name.pk %}">{{ ob_name }}の日記一覧</a></b></p>
+        <p><b><a href="{% url 'App:feel_log' %}">{{ ob_name }}の日記を書く</a></b></p>
+    {% endif %}
+    </div>
+    <div>
+        <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
+    </div>
+
+{% endblock %}

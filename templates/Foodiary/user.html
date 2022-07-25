@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% load django_bootstrap5 %}
+
+    <div class="mt-5">
+    <h2 class="mb-0">ユーザーページ</h2>
+        <div class="mb-4 mt-4">
+            <h3><a href="{% url 'App:all_diary' %}">日記一覧</a></h3>
+        </div>
+
+        <div>
+            <h3>追加</h3>
+            <ul>
+                <li><a href="">エリア</a></li>
+                <li><a href="">場所</a></li>
+                <li><a href="">お店</a></li>
+                <li><a href="">ジャンル</a></li>
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}

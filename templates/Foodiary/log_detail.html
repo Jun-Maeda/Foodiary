@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% if feellog.user == request.user %}
+        <div>
+            日時：{{ feellog.date }}
+        </div>
+        <div>
+            評価：{{ feellog.get_evaluation_display }}
+        </div>
+        <div>
+            ジャンル：{{ feellog.food }}
+        </div>
+        {% if feellog.image %}
+            <div class="">
+                <img style="width:50%" src="{{ feellog.image.url }}">
+            </div>
+        {% endif %}
+        <div>
+            コメント：{{ feellog.comment }}
+        </div>
+    {% endif %}
+    <div>
+        <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
+    </div>
+
+{% endblock %}

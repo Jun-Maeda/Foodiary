@@ -2,8 +2,36 @@
 {% load static %}
 {% block content %}
 
-  <div class="row">
-   <p class="col-6">test</p>
-  <p class="col-6">test2</p>
-  </div>
+    <div class="">
+        <div>
+            <h2 class="mb-0">エリア一覧</h2>
+            <ul>
+                {% for a in area %}
+                    {% if a.user == request.user %}
+                    <li><a href="{% url 'App:place_list' pk=a.pk %}">{{ a.name }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2 class="mb-0">ジャンル一覧</h2>
+            <ul>
+                {% for f in food %}
+                    {% if f.user == request.user %}
+                    <li>{{ f.name }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h2>評価</h2>
+            <ul>
+                <li><a href="">☆☆☆☆☆</a></li>
+                <li><a href="">☆☆☆☆</a></li>
+                <li><a href="">☆☆☆</a></li>
+                <li><a href="">☆☆</a></li>
+                <li><a href="">☆</a></li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}
