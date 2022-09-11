@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Area, Place, Shop, Food, FeelLog
+from .models import Area, Place, Shop, Food, FeelLog, Food_menu
 
 # 場所でリレーションしているものを表示
 class PlaceInline(admin.StackedInline):
@@ -44,3 +44,4 @@ admin.site.register(Place, PlaceAdmin)
 admin.site.register(Shop, ShopAdmin)
 admin.site.register(Food, FoodAdmin)
 admin.site.register(FeelLog, FeelLogAdmin)
+admin.site.register(Food_menu)

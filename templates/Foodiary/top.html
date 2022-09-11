@@ -5,33 +5,39 @@
     <div class="">
         <div>
             <h2 class="mb-0">エリア一覧</h2>
-            <ul>
+            <ul class="row">
                 {% for a in area %}
-                    {% if a.user == request.user %}
-                    <li><a href="{% url 'App:place_list' pk=a.pk %}">{{ a.name }}</a></li>
-                    {% endif %}
+                    <li class="col-6"><a href="{% url 'App:place_list' pk=a.pk %}">{{ a.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
         <div>
             <h2 class="mb-0">ジャンル一覧</h2>
-            <ul>
+            <ul class="row">
                 {% for f in food %}
-                    {% if f.user == request.user %}
-                    <li>{{ f.name }}</li>
-                    {% endif %}
+                    <li class="col-6"><a href="{% url 'App:food_cat' pk=f.pk %}">{{ f.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
-        <div>
-            <h2>評価</h2>
-            <ul>
-                <li><a href="">☆☆☆☆☆</a></li>
-                <li><a href="">☆☆☆☆</a></li>
-                <li><a href="">☆☆☆</a></li>
-                <li><a href="">☆☆</a></li>
-                <li><a href="">☆</a></li>
-            </ul>
+        <div class="row mt-5">
+            <div class="col-6">
+                <h2>高評価ランキング</h2>
+                <ul>
+                    {% for s_a in shop_a %}
+                        <li><a href="{% url 'App:shop_detail' pk=s_a.pk %}">{{ s_a.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-6">
+                <h2>行く店ランキング</h2>
+                <ul>
+                    {% for s_t in shop_time %}
+                        <li><a href="{% url 'App:shop_detail' pk=s_t.pk %}">{{ s_t.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
+
+
 {% endblock %}

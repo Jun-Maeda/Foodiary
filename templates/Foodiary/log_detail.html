@@ -11,6 +11,9 @@
         <div>
             ジャンル：{{ feellog.food }}
         </div>
+                <div>
+            メニュー：{{ feellog.food_menu }}
+        </div>
         {% if feellog.image %}
             <div class="">
                 <img style="width:50%" src="{{ feellog.image.url }}">
@@ -20,6 +23,7 @@
             コメント：{{ feellog.comment }}
         </div>
     {% endif %}
+    <div><a href="{% url 'App:update_log' feellog.pk %}">編集</a></div>
     <div>
         <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
     </div>

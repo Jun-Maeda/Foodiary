@@ -12,6 +12,7 @@
                     {#                日記の時#}
                     {% if d.evaluation %}
                         {{ d.date }}
+                        <span style="margin-left:20px">{{ d.shop_name }}</span>
                         <span style="margin-left:20px">{{ d.get_evaluation_display }}</span>
                     {% else %}
                         {{ d.name }}
@@ -21,6 +22,24 @@
                 {% endif %}
             {% endfor %}
         </ul>
+    <div class="pager">
+    <!-- 前のページへのリンク -->
+    {% if data_list.has_previous %}
+        <a href="?p={{ data_list.previous_page_number }}">前へ</a>
+    {% endif %}
+    {% if data_list.has_next or data_list.has_next %}
+    <!-- 現在のページ番号と全体のページ数 -->
+    <span>
+        {{ data_list.number }} / {{ data_list.paginator.num_pages }}
+    </span>
+    {% endif %}
+    <!-- 次のページへのリンク -->
+    {% if data_list.has_next %}
+        <a href="?p={{ data_list.next_page_number }}">次へ</a>
+    {% endif %}
+</div>
         <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
     </div>
+
+
 {% endblock %}

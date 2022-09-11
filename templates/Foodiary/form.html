@@ -9,13 +9,16 @@
                 {% csrf_token %}
                 {% for field in form %}
                     <div class="row form-group">
-                        <label class="col-4 mt-2">{{ field.label }}{{ field.errors }}</label>
+                        {% if field.label == "ユーザー名" %}
+                        {% else %}
+                            <label class="col-4 mt-2">{{ field.label }}{{ field.errors }}</label>
+                        {% endif %}
                         <div class="col-8 mt-2">
                             {% if field.label == "ユーザー名" %}
                                 <input id="id_user" type="text" name="user" class="form-control"
                                        value="{{ user.pk }}" readonly hidden required="">
                                 <input id="requestUserName" class="form-control"
-                                       value="{{ user.username }}" readonly>
+                                       value="{{ user.username }}" hidden readonly>
                             {% else %}
                                 {{ field }}
                             {% endif %}
@@ -30,6 +33,6 @@
                 <button class="btn btn-sm btn-outline-primary mt-3" type="submit">送信</button>
             </form>
         </div>
-
+        <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
     </div>
 {% endblock %}
