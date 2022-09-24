@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import LoginForm, FeelLogForm, AreaAddForm, PlaceAddForm, ShopAddForm, FoodAddForm
+from .forms import LoginForm, FeelLogForm, AreaAddForm, PlaceAddForm, ShopAddForm, FoodAddForm, AreaShopAddForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Food, Area, Place, Shop, FeelLog, User, Food_menu
 from django.contrib.auth.models import User
@@ -72,6 +72,7 @@ class ShopList(generic.TemplateView):
         context['data_list'] = data_list
         context['title'] = "店舗"
         context['url_name'] = "App:shop_detail"
+        context['add'] = "shop_add"
         return context
 
 
@@ -297,6 +298,26 @@ class ShopAddView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'].fields['place_name'].queryset = Place.objects.filter(user=self.request.user)
+        return context
+
+
+# 場所ごとのお店の追加フォーム
+class AreaShopAddView(generic.CreateView):
+    model = Shop
+    form_class = AreaShopAddForm
+    template_name = 'Foodiary/form.html'
+
+    def get_success_url(self):
+        messages.success(self.request, '追加しました')
+        return reverse_lazy('App:shop_add')
+
+    def form_valid(self, form):
+        form = form.save(commit=False, )
+        return super(ShopAddView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'].fields['place_name'].queryset = Place.objects.filter(pk=self.kwargs['pk'])
         return context
 
 
