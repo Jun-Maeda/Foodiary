@@ -5,7 +5,7 @@
 
     <div class="mt-5">
         <div>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for field in form %}
                     <div class="row form-group">
@@ -16,11 +16,12 @@
                         <div class="col-8 mt-2">
                             {% if field.label == "ユーザー名" %}
                                 <input id="id_user" type="text" name="user" class="form-control"
-                                       value="{{ user.pk }}" readonly hidden required="">
+                                       value="{{ user.pk }}" hidden required="">
                                 <input id="requestUserName" class="form-control"
                                        value="{{ user.username }}" hidden readonly>
                             {% else %}
                                 {{ field }}
+                                {{ upload_form.as_p }}
                             {% endif %}
 
                             {% if field.help_text %}
@@ -30,9 +31,20 @@
                         </div>
                     </div>
                 {% endfor %}
-                <button class="btn btn-sm btn-outline-primary mt-3" type="submit">送信</button>
+                <div class="row mt-3">
+                    <div class="col-4"></div>
+                    <div class="btn-toolbar mb-3 col-8">
+                        {#                    <div class="col">#}
+                        <input type="button" class="mx-2 btn btn-secondary" value="戻る"
+                               onClick="javascript:history.go(-1);">
+                        {#                    </div>#}
+                        {#                    <div class="col">#}
+                        <button class="mx-2 btn btn-outline-primary" type="submit">送信</button>
+                        {#                    </div>#}
+                    </div>
+                </div>
             </form>
         </div>
-        <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
+
     </div>
 {% endblock %}

@@ -3,45 +3,49 @@
 {% block content %}
     {% load django_bootstrap5 %}
 
-    <div class="mt-5">
+    <div class="mt-5 cont">
         <h2 class="mb-0">{{ title }}</h2>
-        <ul class="mt-4">
-            {% for d in data_list %}
-                {% if d.user == request.user %}
-                <li><a href="{% url url_name pk=d.pk %}">
-                    {#                日記の時#}
-                    {% if d.evaluation %}
-                        {{ d.date }}
-                        <span style="margin-left:20px">{{ d.shop_name }}</span>
-                        <span style="margin-left:20px">{{ d.get_evaluation_display }}</span>
-                    {% else %}
-                        {{ d.name }}
+        <div class="det">
+            <ul class="mt-4">
+                {% for d in data_list %}
+                    {% if d.user == request.user %}
+                        <li><a href="{% url url_name pk=d.pk %}">
+                            {#                日記の時#}
+                            {% if d.evaluation %}
+                                {{ d.date }}
+                                <span style="margin-left:20px">{{ d.food_menu }}</span>
+                            {% else %}
+                                {{ d.name }}
+                            {% endif %}
+                        </a>
+                        </li>
                     {% endif %}
-                </a>
-                </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% if add == "shop_add" %}
-    <span><a href="{% url "App:add_area_shop" pk=pk %}">お店を追加</a></span>
-    {% endif %}
-    <div class="pager">
-    <!-- 前のページへのリンク -->
-    {% if data_list.has_previous %}
-        <a href="?p={{ data_list.previous_page_number }}">前へ</a>
-    {% endif %}
-    {% if data_list.has_next or data_list.has_next %}
-    <!-- 現在のページ番号と全体のページ数 -->
-    <span>
+                {% endfor %}
+            </ul>
+        </div>
+        {% if add %}
+            <p class="my-2"><a href="{% url "App:add_area_shop" pk=pk %}">→{{ add.name }}のお店を追加</a></p>
+        {% endif %}
+        {% if add_place %}
+            <p class="my-2"><a href="{% url "App:add_area_place" pk=pk %}">→{{ add_place.name }}の場所を追加</a></p>
+        {% endif %}
+        <div class="pager">
+            <!-- 前のページへのリンク -->
+            {% if data_list.has_previous %}
+                <a href="?p={{ data_list.previous_page_number }}">前へ</a>
+            {% endif %}
+            {% if data_list.has_next or data_list.has_next %}
+                <!-- 現在のページ番号と全体のページ数 -->
+                <span>
         {{ data_list.number }} / {{ data_list.paginator.num_pages }}
     </span>
-    {% endif %}
-    <!-- 次のページへのリンク -->
-    {% if data_list.has_next %}
-        <a href="?p={{ data_list.next_page_number }}">次へ</a>
-    {% endif %}
-</div>
-        <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
+            {% endif %}
+            <!-- 次のページへのリンク -->
+            {% if data_list.has_next %}
+                <a href="?p={{ data_list.next_page_number }}">次へ</a>
+            {% endif %}
+        </div>
+        <div class="mt-3"><input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);"></div>
     </div>
 
 

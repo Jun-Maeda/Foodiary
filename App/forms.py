@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from .models import FeelLog, Food, Area, Place, Shop
+from django.core.files.storage import default_storage
 
 
 class LoginForm(AuthenticationForm):
@@ -80,13 +81,6 @@ class ShopAddForm(forms.ModelForm):
     class Meta:
         model = Shop
         fields = ['user', 'name', 'place_name', 'menu', 'memo']
-
-
-class AreaShopAddForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(AreaShopAddForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs["class"] = "form-control"
 
     class Meta:
         model = Shop

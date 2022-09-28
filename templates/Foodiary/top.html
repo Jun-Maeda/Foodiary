@@ -3,38 +3,72 @@
 {% block content %}
 
     <div class="">
-        <div>
-            <h2 class="mb-0">エリア一覧</h2>
-            <ul class="row">
-                {% for a in area %}
-                    <li class="col-6"><a href="{% url 'App:place_list' pk=a.pk %}">{{ a.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div>
-            <h2 class="mb-0">ジャンル一覧</h2>
-            <ul class="row">
-                {% for f in food %}
-                    <li class="col-6"><a href="{% url 'App:food_cat' pk=f.pk %}">{{ f.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="row mt-5">
-            <div class="col-6">
-                <h2>高評価ランキング</h2>
-                <ul>
-                    {% for s_a in shop_a %}
-                        <li><a href="{% url 'App:shop_detail' pk=s_a.pk %}">{{ s_a.name }}</a></li>
+        <div class="cont mb-3">
+            <h2 class="mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-compass"
+                     viewBox="0 0 16 16">
+                    <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                    <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
+                </svg>
+                エリア一覧<small style="font-size:13px" class="m-1"><a
+                    href="{% url 'App:area_add' %}">追加</a></small></h2>
+            <div class="det">
+                <ul class="row">
+                    {% for a in area %}
+                        <li class="col-6"><a href="{% url 'App:place_list' pk=a.pk %}">{{ a.name }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-6">
-                <h2>行く店ランキング</h2>
-                <ul>
-                    {% for s_t in shop_time %}
-                        <li><a href="{% url 'App:shop_detail' pk=s_t.pk %}">{{ s_t.name }}</a></li>
+        </div>
+        <div class="cont mb-3">
+            <h2 class="mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-tag"
+                     viewBox="0 0 16 16">
+                    <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"/>
+                    <path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"/>
+                </svg>
+                ジャンル一覧<small style="font-size:13px" class="m-1"><a
+                    href="{% url 'App:food_add' %}">追加</a></small></h2>
+            <div class="det">
+                <ul class="row">
+                    {% for f in food %}
+                        <li class="col-6"><a href="{% url 'App:food_cat' pk=f.pk %}">{{ f.name }}</a></li>
                     {% endfor %}
                 </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 cont mb-3">
+                <h2 class="mb-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                         class="bi bi-star" viewBox="0 0 16 16">
+                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                    </svg>
+                    高評価ランキング
+                </h2>
+                <div class="det">
+                    <ul>
+                        {% for s_a in shop_a %}
+                            <li><a href="{% url 'App:shop_detail' pk=s_a.pk %}">{{ s_a.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 cont mb-3">
+                <h2 class="mb-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                         class="bi bi-trophy" viewBox="0 0 16 16">
+                        <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935zM3.504 1c.007.517.026 1.006.056 1.469.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.501.501 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667.03-.463.049-.952.056-1.469H3.504z"/>
+                    </svg>
+                    行く店ランキング
+                </h2>
+                <div class="det">
+                    <ul>
+                        {% for s_t in shop_time %}
+                            <li><a href="{% url 'App:shop_detail' pk=s_t.pk %}">{{ s_t.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

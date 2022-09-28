@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import LoginForm, FeelLogForm, AreaAddForm, PlaceAddForm, ShopAddForm, FoodAddForm, AreaShopAddForm
+from .forms import LoginForm, FeelLogForm, AreaAddForm, PlaceAddForm, ShopAddForm, FoodAddForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Food, Area, Place, Shop, FeelLog, User, Food_menu
 from django.contrib.auth.models import User
@@ -57,6 +57,7 @@ class PlaceList(generic.TemplateView):
         context['data_list'] = data_list
         context['title'] = "場所"
         context['url_name'] = "App:shop_list"
+        context['add_place'] = area_n
         return context
 
 
@@ -72,7 +73,7 @@ class ShopList(generic.TemplateView):
         context['data_list'] = data_list
         context['title'] = "店舗"
         context['url_name'] = "App:shop_detail"
-        context['add'] = "shop_add"
+        context['add'] = place_n
         return context
 
 
@@ -175,6 +176,9 @@ class FeelLogView(generic.CreateView):
         return reverse_lazy('App:all_feel_log')
 
     def form_valid(self, form):
+        # 画像があれば変換して保存
+        if self.request.FILES['image']:
+            form.cleaned_data['image'] = self.request.FILES['image']
         # オーバーライドして、もし追加のメニューがあれば登録してリレーション
         form = form.save(commit=False, )
         new_menu = self.request.POST['add_menu']
@@ -216,6 +220,9 @@ class ShopFeelLogView(generic.CreateView):
         return reverse_lazy('App:shop_detail', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
+        # 画像があれば変換して保存
+        if self.request.FILES['image']:
+            form.cleaned_data['image'] = self.request.FILES['image']
         # オーバーライドして、もし追加のメニューがあれば登録してリレーション
         form = form.save(commit=False, )
         new_menu = self.request.POST['add_menu']
@@ -281,6 +288,26 @@ class PlaceAddView(generic.CreateView):
         return context
 
 
+# エリア指定の場所の追加フォーム
+class AleaPlaceAddView(generic.CreateView):
+    model = Place
+    form_class = PlaceAddForm
+    template_name = 'Foodiary/form.html'
+
+    def get_success_url(self):
+        messages.success(self.request, '追加しました')
+        return reverse_lazy('App:place_add')
+
+    def form_valid(self, form):
+        form = form.save(commit=False, )
+        return super(AleaPlaceAddView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'].fields['area_name'].queryset = Area.objects.filter(pk=self.kwargs['pk'])
+        return context
+
+
 # お店の追加フォーム
 class ShopAddView(generic.CreateView):
     model = Shop
@@ -292,6 +319,8 @@ class ShopAddView(generic.CreateView):
         return reverse_lazy('App:shop_add')
 
     def form_valid(self, form):
+        if self.request.FILES['menu']:
+            form.cleaned_data['menu'] = self.request.FILES['menu']
         form = form.save(commit=False, )
         return super(ShopAddView, self).form_valid(form)
 
@@ -304,7 +333,7 @@ class ShopAddView(generic.CreateView):
 # 場所ごとのお店の追加フォーム
 class AreaShopAddView(generic.CreateView):
     model = Shop
-    form_class = AreaShopAddForm
+    form_class = ShopAddForm
     template_name = 'Foodiary/form.html'
 
     def get_success_url(self):
@@ -312,8 +341,11 @@ class AreaShopAddView(generic.CreateView):
         return reverse_lazy('App:shop_add')
 
     def form_valid(self, form):
+        # 画像ファイルを指定し直して保存
+        if self.request.FILES['menu']:
+            form.cleaned_data['menu'] = self.request.FILES['menu']
         form = form.save(commit=False, )
-        return super(ShopAddView, self).form_valid(form)
+        return super(AreaShopAddView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

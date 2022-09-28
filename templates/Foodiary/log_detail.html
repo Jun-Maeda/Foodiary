@@ -2,17 +2,18 @@
 {% load static %}
 {% block content %}
     {% if feellog.user == request.user %}
-        <div>
-            日時：{{ feellog.date }}
-        </div>
-        <div>
-            評価：{{ feellog.get_evaluation_display }}
-        </div>
-        <div>
-            ジャンル：{{ feellog.food }}
-        </div>
-                <div>
-            メニュー：{{ feellog.food_menu }}
+        <div class="cont mb-3">
+        <h2 class="mb-0">
+            {{ feellog.date }} {{ feellog.get_evaluation_display }}
+        </h2>
+        <div class="det">
+        <div class="row mb-3">
+            <div class="col-6">
+                ジャンル：{{ feellog.food }}
+            </div>
+            <div class="col-6">
+                メニュー：{{ feellog.food_menu }}
+            </div>
         </div>
         {% if feellog.image %}
             <div class="">
@@ -20,10 +21,12 @@
             </div>
         {% endif %}
         <div>
-            コメント：{{ feellog.comment }}
+            {{ feellog.comment }}
         </div>
     {% endif %}
-    <div><a href="{% url 'App:update_log' feellog.pk %}">編集</a></div>
+</div>
+</div>
+    <div class="mb-2"><a href="{% url 'App:update_log' feellog.pk %}">→編集</a></div>
     <div>
         <input type="button" class="btn btn-secondary" value="戻る" onClick="javascript:history.go(-1);">
     </div>
