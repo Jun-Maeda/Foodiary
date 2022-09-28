@@ -95,7 +95,7 @@ class Food(models.Model):
     )
     shops = models.ManyToManyField(
         "Shop",
-        blank=True, null=True,
+        blank=True,
     )
 
     def __str__(self):
@@ -117,6 +117,7 @@ class Food_menu(models.Model):
         verbose_name='ジャンル',
         on_delete=models.CASCADE,
     )
+
     def __str__(self):
         return self.name
 
